@@ -1,0 +1,447 @@
+
+<%- include('partials/Header') %>
+
+<!-- Main Content - Layout 3 cột kiểu Facebook -->
+<div class="container">
+    <!-- Left Sidebar -->
+    <div class="left-sidebar">
+        <div class="sidebar-menu">
+            <div class="sidebar-item active">
+                <i class="fas fa-home"></i>
+                <span>Bảng tin</span>
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-users"></i>
+                <span>Bạn bè</span>
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-calendar"></i>
+                <span>Sự kiện</span>
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-bookmark"></i>
+                <span>Đã lưu</span>
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-flag"></i>
+                <span>Trang của tôi</span>
+            </div>
+        </div>
+
+        <div class="sidebar-clubs">
+            <h3><i class="fas fa-users" style="color: #c53030;"></i> CLB của tôi</h3>
+            <div class="club-list-item">
+                <div class="club-avatar-small">IT</div>
+                <div class="club-info-small">
+                    <div class="club-name-small">CLB Tin học</div>
+                    <div class="club-status-small">12 bài mới</div>
+                </div>
+            </div>
+            <div class="club-list-item">
+                <div class="club-avatar-small">TN</div>
+                <div class="club-info-small">
+                    <div class="club-name-small">CLB Tình nguyện</div>
+                    <div class="club-status-small">5 bài mới</div>
+                </div>
+            </div>
+            <div class="club-list-item">
+                <div class="club-avatar-small">AN</div>
+                <div class="club-info-small">
+                    <div class="club-name-small">CLB Âm nhạc</div>
+                    <div class="club-status-small">3 bài mới</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <!-- Create Post -->
+        <div class="create-post">
+            <div class="create-post-header">
+                <div class="user-avatar-medium">NA</div>
+                <div class="post-input" onclick="openCreatePostModal()">
+                    Bạn đang nghĩ gì?
+                </div>
+            </div>
+            <div class="create-post-divider"></div>
+            <div class="create-post-actions">
+                <div class="post-action" onclick="openCreatePostModal('image')">
+                    <i class="fas fa-image"></i>
+                    <span>Ảnh</span>
+                </div>
+                <div class="post-action" onclick="openCreatePostModal('video')">
+                    <i class="fas fa-video"></i>
+                    <span>Video</span>
+                </div>
+                <div class="post-action" onclick="openCreatePostModal('event')">
+                    <i class="fas fa-calendar"></i>
+                    <span>Sự kiện</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feed Tabs -->
+        <div class="feed-tabs">
+            <div class="feed-tab active" onclick="filterFeed('all')">Tất cả</div>
+            <div class="feed-tab" onclick="filterFeed('clubs')">Từ CLB</div>
+            <div class="feed-tab" onclick="filterFeed('trending')">Thịnh hành</div>
+            <div class="feed-tab" onclick="filterFeed('following')">Đang theo dõi</div>
+        </div>
+
+        <!-- News Feed -->
+        <div class="news-feed" id="newsFeed">
+            <!-- Post 1 -->
+            <div class="post-card" data-club="it" data-popularity="100">
+                <div class="post-header">
+                    <div class="post-avatar">IT</div>
+                    <div class="post-info">
+                        <div class="post-author">
+                            <span class="author-name">CLB Tin học</span>
+                            <span class="author-badge">Official</span>
+                            <span class="post-time">· 2 giờ trước</span>
+                        </div>
+                        <div class="post-privacy">
+                            <i class="fas fa-globe"></i> Công khai
+                        </div>
+                    </div>
+                </div>
+
+                <div class="post-content">
+                    <div class="post-text">
+                        🚀 **TUYỂN THÀNH VIÊN CLB TIN HỌC ĐỢT 1/2026**<br><br>
+                        Chào các bạn sinh viên đam mê công nghệ!<br><br>
+                        CLB Tin học thông báo tuyển thành viên mới cho các ban:<br>
+                        • Ban Lập trình (Web, Mobile, AI)<br>
+                        • Ban Thiết kế đồ họa<br>
+                        • Ban Nội dung - Truyền thông<br>
+                        • Ban Sự kiện<br><br>
+                        📅 Hạn đăng ký: 15/04/2026<br>
+                        📍 Link đăng ký: bit.ly/clb-tin-hoc-2026<br><br>
+                        Các bạn nhanh tay đăng ký để có cơ hội tham gia các dự án thực tế và workshop với doanh nghiệp nhé! 🔥
+                    </div>
+                    <div class="post-media">
+                        <img src="https://images.unsplash.com/photo-1558401391-7899b4bd5bbf?w=600" alt="Tuyển thành viên">
+                    </div>
+                </div>
+
+                <div class="post-stats">
+                    <div class="reactions">
+                        <div class="reaction-icons">
+                            <i class="fas fa-thumbs-up"></i>
+                            <i class="fas fa-heart"></i>
+                            <i class="fas fa-laugh"></i>
+                        </div>
+                        <span>234 lượt thích</span>
+                    </div>
+                    <div class="comments-shares">
+                        <span>45 bình luận</span>
+                        <span>12 chia sẻ</span>
+                    </div>
+                </div>
+
+                <div class="post-actions">
+                    <div class="post-action-btn" onclick="likePost(this)">
+                        <i class="far fa-thumbs-up"></i> Thích
+                    </div>
+                    <div class="post-action-btn" onclick="showComments(this)">
+                        <i class="far fa-comment"></i> Bình luận
+                    </div>
+                    <div class="post-action-btn" onclick="sharePost()">
+                        <i class="far fa-share-square"></i> Chia sẻ
+                    </div>
+                </div>
+
+                <div class="comments-section" style="display: none;">
+                    <div class="comment-item">
+                        <div class="comment-avatar">MT</div>
+                        <div class="comment-content">
+                            <div class="comment-author">Minh Thư</div>
+                            <div class="comment-text">Cho mình hỏi ban lập trình có yêu cầu kinh nghiệm không ạ?</div>
+                            <div class="comment-actions">
+                                <span>Thích</span>
+                                <span>Phản hồi</span>
+                                <span>2 giờ</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add-comment">
+                        <div class="comment-avatar">NA</div>
+                        <input type="text" class="comment-input" placeholder="Viết bình luận...">
+                        <button class="comment-submit" onclick="addComment(this)"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Post 2 -->
+            <div class="post-card" data-club="it" data-popularity="85">
+                <div class="post-header">
+                    <div class="post-avatar">IT</div>
+                    <div class="post-info">
+                        <div class="post-author">
+                            <span class="author-name">CLB Tin học</span>
+                            <span class="author-badge">Official</span>
+                            <span class="post-time">· 5 giờ trước</span>
+                        </div>
+                        <div class="post-privacy">
+                            <i class="fas fa-globe"></i> Công khai
+                        </div>
+                    </div>
+                </div>
+
+                <div class="post-content">
+                    <div class="post-text">
+                        💡 **Lộ trình học AI toàn diện từ A đến Z**<br><br>
+                        Bạn muốn tìm hiểu về Trí tuệ nhân tạo nhưng không biết bắt đầu từ đâu?<br><br>
+                        CLB Tin học tổng hợp lộ trình học AI chi tiết:<br>
+                        • Tháng 1-2: Python & Toán cơ bản<br>
+                        • Tháng 3-4: Machine Learning cơ bản<br>
+                        • Tháng 5-6: Deep Learning & Neural Networks<br>
+                        • Tháng 7-8: Computer Vision / NLP<br>
+                        • Tháng 9-10: Dự án thực tế<br><br>
+                        Link tài liệu trong comment nhé! 👇
+                    </div>
+                    <div class="post-media">
+                        <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600" alt="AI">
+                    </div>
+                </div>
+
+                <div class="post-stats">
+                    <div class="reactions">
+                        <div class="reaction-icons">
+                            <i class="fas fa-thumbs-up"></i>
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <span>456 lượt thích</span>
+                    </div>
+                    <div class="comments-shares">
+                        <span>89 bình luận</span>
+                        <span>23 chia sẻ</span>
+                    </div>
+                </div>
+
+                <div class="post-actions">
+                    <div class="post-action-btn" onclick="likePost(this)">
+                        <i class="far fa-thumbs-up"></i> Thích
+                    </div>
+                    <div class="post-action-btn" onclick="showComments(this)">
+                        <i class="far fa-comment"></i> Bình luận
+                    </div>
+                    <div class="post-action-btn" onclick="sharePost()">
+                        <i class="far fa-share-square"></i> Chia sẻ
+                    </div>
+                </div>
+
+                <div class="comments-section" style="display: none;">
+                    <div class="comment-item">
+                        <div class="comment-avatar">QH</div>
+                        <div class="comment-content">
+                            <div class="comment-author">Quang Huy</div>
+                            <div class="comment-text">Cho mình xin link tài liệu với ạ!</div>
+                            <div class="comment-actions">
+                                <span>Thích</span>
+                                <span>Phản hồi</span>
+                                <span>1 giờ</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add-comment">
+                        <div class="comment-avatar">NA</div>
+                        <input type="text" class="comment-input" placeholder="Viết bình luận...">
+                        <button class="comment-submit" onclick="addComment(this)"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Post 3 - Video -->
+            <div class="post-card" data-club="volunteer" data-popularity="120">
+                <div class="post-header">
+                    <div class="post-avatar">TN</div>
+                    <div class="post-info">
+                        <div class="post-author">
+                            <span class="author-name">CLB Tình nguyện</span>
+                            <span class="author-badge">Official</span>
+                            <span class="post-time">· 1 ngày trước</span>
+                        </div>
+                        <div class="post-privacy">
+                            <i class="fas fa-globe"></i> Công khai
+                        </div>
+                    </div>
+                </div>
+
+                <div class="post-content">
+                    <div class="post-text">
+                        📹 **RECAP: Hành trình Mùa hè xanh 2026**<br><br>
+                        Cùng nhìn lại những khoảnh khắc đẹp của chiến dịch Mùa hè xanh vừa qua tại huyện đảo Cô Tô. Cảm ơn tất cả các bạn đã cùng chung tay vì cộng đồng! ❤️
+                    </div>
+                    <div class="post-media">
+                        <video controls poster="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=600">
+                            <source src="#" type="video/mp4">
+                            Trình duyệt của bạn không hỗ trợ video.
+                        </video>
+                    </div>
+                </div>
+
+                <div class="post-stats">
+                    <div class="reactions">
+                        <div class="reaction-icons">
+                            <i class="fas fa-heart"></i>
+                            <i class="fas fa-thumbs-up"></i>
+                        </div>
+                        <span>678 lượt thích</span>
+                    </div>
+                    <div class="comments-shares">
+                        <span>123 bình luận</span>
+                        <span>45 chia sẻ</span>
+                    </div>
+                </div>
+
+                <div class="post-actions">
+                    <div class="post-action-btn" onclick="likePost(this)">
+                        <i class="far fa-thumbs-up"></i> Thích
+                    </div>
+                    <div class="post-action-btn" onclick="showComments(this)">
+                        <i class="far fa-comment"></i> Bình luận
+                    </div>
+                    <div class="post-action-btn" onclick="sharePost()">
+                        <i class="far fa-share-square"></i> Chia sẻ
+                    </div>
+                </div>
+
+                <div class="comments-section" style="display: none;">
+                    <div class="comment-item">
+                        <div class="comment-avatar">NH</div>
+                        <div class="comment-content">
+                            <div class="comment-author">Ngọc Hà</div>
+                            <div class="comment-text">Kỉ niệm đẹp quá! Nhớ mọi người quá 😢</div>
+                            <div class="comment-actions">
+                                <span>Thích</span>
+                                <span>Phản hồi</span>
+                                <span>12 giờ</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add-comment">
+                        <div class="comment-avatar">NA</div>
+                        <input type="text" class="comment-input" placeholder="Viết bình luận...">
+                        <button class="comment-submit" onclick="addComment(this)"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Load More -->
+        <div style="text-align: center; margin: 30px 0;">
+            <button class="btn-primary" style="width: 200px;" onclick="loadMorePosts()">
+                <i class="fas fa-sync-alt"></i> Xem thêm
+            </button>
+        </div>
+    </div>
+
+    <!-- Right Sidebar -->
+    <div class="right-sidebar">
+        <div class="trending-news">
+            <h3><i class="fas fa-fire" style="color: #c53030;"></i> Thịnh hành</h3>
+            <div class="trending-item">
+                <div class="trending-category">#CôngNghệ</div>
+                <div class="trending-title">Lộ trình học AI 2026</div>
+                <div class="trending-meta">1.2K lượt thích</div>
+            </div>
+            <div class="trending-item">
+                <div class="trending-category">#SựKiện</div>
+                <div class="trending-title">Workshop React miễn phí</div>
+                <div class="trending-meta">890 lượt quan tâm</div>
+            </div>
+            <div class="trending-item">
+                <div class="trending-category">#TìnhNguyện</div>
+                <div class="trending-title">Mùa hè xanh 2026</div>
+                <div class="trending-meta">678 lượt thích</div>
+            </div>
+            <div class="trending-item">
+                <div class="trending-category">#ÂmNhạc</div>
+                <div class="trending-title">Đêm nhạc GACOUSTIC</div>
+                <div class="trending-meta">456 đã đăng ký</div>
+            </div>
+        </div>
+
+        <div class="suggested-clubs">
+            <h3><i class="fas fa-users" style="color: #c53030;"></i> Gợi ý CLB</h3>
+            <div class="club-list-item">
+                <div class="club-avatar-small">RB</div>
+                <div class="club-info-small">
+                    <div class="club-name-small">CLB Robot</div>
+                    <div class="club-status-small">123 thành viên</div>
+                </div>
+                <i class="fas fa-plus-circle" style="color: #c53030; cursor: pointer;" onclick="joinClub(this)"></i>
+            </div>
+            <div class="club-list-item">
+                <div class="club-avatar-small">TD</div>
+                <div class="club-info-small">
+                    <div class="club-name-small">CLB Thể dục</div>
+                    <div class="club-status-small">89 thành viên</div>
+                </div>
+                <i class="fas fa-plus-circle" style="color: #c53030; cursor: pointer;" onclick="joinClub(this)"></i>
+            </div>
+            <div class="club-list-item">
+                <div class="club-avatar-small">MT</div>
+                <div class="club-info-small">
+                    <div class="club-name-small">CLB Mỹ thuật</div>
+                    <div class="club-status-small">156 thành viên</div>
+                </div>
+                <i class="fas fa-plus-circle" style="color: #c53030; cursor: pointer;" onclick="joinClub(this)"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create Post Modal -->
+<div class="modal" id="createPostModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Tạo bài viết mới</h3>
+            <button class="close-btn" onclick="closeModal('createPostModal')"><i class="fas fa-times"></i></button>
+        </div>
+
+        <div class="modal-user-info">
+            <div class="modal-user-avatar">NA</div>
+            <div class="modal-user-details">
+                <div class="modal-user-name">Nguyễn Văn A</div>
+                <div class="post-privacy-select">
+                    <i class="fas fa-globe"></i> Công khai
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+
+        <textarea class="modal-post-input" id="postContent" placeholder="Bạn đang nghĩ gì?"></textarea>
+
+        <div class="media-upload-area" onclick="document.getElementById('postMedia').click()" id="uploadArea">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <p>Thêm ảnh hoặc video</p>
+            <p style="font-size: 12px; color: #94a3b8;">Hỗ trợ JPG, PNG, MP4 (tối đa 20MB)</p>
+        </div>
+        <input type="file" id="postMedia" accept="image/*,video/*" style="display: none;" onchange="previewMedia(this)">
+
+        <div class="media-preview" id="mediaPreview">
+            <img src="" alt="Preview" id="previewImage">
+            <video controls id="previewVideo" style="display: none;">
+                <source src="" type="video/mp4">
+            </video>
+            <button class="remove-media" onclick="removeMedia()"><i class="fas fa-times"></i></button>
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn-primary" onclick="createPost()">
+                <i class="fas fa-paper-plane"></i> Đăng bài
+            </button>
+            <button class="btn-secondary" onclick="closeModal('createPostModal')">
+                Hủy
+            </button>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="CSS/TinTuc.css">
+<link rel="stylesheet" href="JS/TinTuc.js">
+
+<%- include('partials/Footer') %>

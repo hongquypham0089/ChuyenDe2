@@ -1,0 +1,304 @@
+<style>
+    /* =========================
+       HEADER STYLES ONLY
+    ========================= */
+    .newspaper-header {
+        font-family: 'Inter', sans-serif;
+        background: white;
+        border-bottom: 3px solid #c53030;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .header-top {
+        background: linear-gradient(135deg, #1a2639 0%, #2d3748 100%);
+        color: white;
+        padding: 8px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 13px;
+    }
+
+    .header-top-left span {
+        margin-right: 24px;
+    }
+
+    .header-top-right i {
+        margin-left: 16px;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+    .header-top-right i:hover {
+        color: #c53030;
+    }
+
+    .header-main {
+        padding: 20px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: white;
+    }
+
+    .logo-section {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .logo {
+        font-family: 'Playfair Display', serif;
+        font-size: 36px;
+        font-weight: 800;
+        color: #c53030;
+        letter-spacing: -1px;
+        text-decoration: none;
+    }
+
+    .logo span {
+        color: #1a2639;
+        font-size: 14px;
+        font-weight: 400;
+        margin-left: 8px;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .edition {
+        border-left: 2px solid #e2e8f0;
+        padding-left: 20px;
+        font-size: 14px;
+        color: #4a5568;
+    }
+
+    .edition .date {
+        font-weight: 700;
+        color: #c53030;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        background: #f1f5f9;
+        padding: 8px 16px 8px 20px;
+        border-radius: 40px;
+        transition: all 0.2s;
+        cursor: pointer;
+    }
+
+    .user-info:hover {
+        background: #e2e8f0;
+    }
+
+    .user-avatar {
+        width: 40px;
+        height: 40px;
+        background: #c53030;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .nav-bar {
+        background: white;
+        padding: 0 40px;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 32px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .nav-links li {
+        padding: 16px 0;
+        font-weight: 500;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+        transition: all 0.2s;
+        position: relative;
+    }
+
+    .nav-links li:hover,
+    .nav-links li.active {
+        color: #c53030;
+        border-bottom-color: #c53030;
+    }
+
+    .nav-links li.active::after {
+        content: '';
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: #c53030;
+        border-radius: 3px 3px 0 0;
+    }
+
+    /* =========================
+       TỐI ƯU RESPONSIVE
+    ========================= */
+    
+    /* Cho Tablet (Màn hình vừa) */
+    @media (max-width: 1024px) {
+        .header-top { padding: 8px 20px; }
+        .header-main { padding: 20px; }
+        .nav-bar { padding: 0 20px; }
+        .nav-links { gap: 24px; }
+    }
+
+    /* Cho Điện thoại (Màn hình nhỏ) */
+    @media (max-width: 768px) {
+        .header-top { 
+            display: none; /* Ẩn dải màu đen trên cùng cho đỡ tốn diện tích màn hình đt */
+        }
+        
+        .header-main {
+            flex-direction: column;
+            gap: 15px;
+            padding: 15px;
+        }
+
+        .logo-section {
+            flex-direction: column;
+            text-align: center;
+            gap: 10px;
+        }
+
+        .logo {
+            font-size: 28px; /* Thu nhỏ logo */
+        }
+
+        .edition {
+            border-left: none;
+            padding-left: 0;
+            border-top: 1px solid #e2e8f0; /* Chuyển vạch dọc thành vạch ngang */
+            padding-top: 10px;
+        }
+
+        .nav-bar {
+            padding: 0; /* Bỏ padding để thanh menu tràn viền màn hình */
+        }
+
+        /* Chuyển menu thành dạng vuốt ngang trên mobile */
+        .nav-links {
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            justify-content: flex-start;
+            padding: 0 15px;
+            gap: 20px;
+            -webkit-overflow-scrolling: touch; /* Giúp vuốt mượt trên iOS */
+        }
+
+        /* Ẩn thanh cuộn ngang để giao diện sạch hơn */
+        .nav-links::-webkit-scrollbar { display: none; }
+        .nav-links { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .nav-links li {
+            white-space: nowrap; /* Không cho rớt dòng text */
+            padding: 12px 0;
+            font-size: 14px;
+        }
+    }
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<header class="newspaper-header">
+    <div class="header-top">
+        <div class="header-top-left"></div>
+        <div class="header-top-right"></div>
+    </div>
+
+    <div class="header-main">
+        <div class="logo-section">
+            <a href="/" class="logo">
+                CLB Connect<span>.vn</span>
+            </a>
+            <div class="edition">
+                <span class="date">Kết nối đam mê</span><br>
+                Nơi hội tụ tinh hoa sinh viên
+            </div>
+        </div>
+        <div class="user-info" id="user-profile-btn">
+            <span>Xin chào, <strong id="username">Khách</strong></span>
+            <div class="user-avatar" id="userAvatar">?</div>
+        </div>
+    </div>
+
+    <div class="nav-bar">
+        <ul class="nav-links">
+            <li class="<%= title === 'Trang chủ - CLB' ? 'active' : '' %>">
+                <a href="/" style="text-decoration: none; color: inherit;">Trang chủ</a>
+            </li>
+            <li class="<%= title === 'Danh sách Câu lạc bộ' ? 'active' : '' %>">
+                <a href="/clb" style="text-decoration: none; color: inherit;">Câu lạc bộ</a>
+            </li>
+            <li class="<%= title === 'Sự kiện sắp tới' ? 'active' : '' %>">
+                <a href="/SuKien" style="text-decoration: none; color: inherit;">Sự kiện</a>
+            </li>
+            <li class="<%= title === 'TinTuc' ? 'active' : '' %>">
+                <a href="/TinTuc" style="text-decoration: none; color: inherit;">Tin tức</a>
+            </li>
+            <li class="<%= title === 'Diễn đàn' ? 'active' : '' %>">
+                <a href="/DienDan" style="text-decoration: none; color: inherit;">Diễn đàn</a>
+            </li>
+        </ul>
+    </div>
+</header>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // 1. Lấy đối tượng 'currentUser' từ localStorage
+        const storedUser = localStorage.getItem('currentUser');
+        
+        const usernameEl = document.getElementById("username");
+        const avatarEl = document.getElementById("userAvatar");
+        const profileBtn = document.getElementById("user-profile-btn");
+
+        // 2. Kiểm tra nếu có dữ liệu người dùng
+        if (storedUser) {
+            // Chuyển chuỗi JSON thành đối tượng Javascript
+            const user = JSON.parse(storedUser);
+
+            if (user.isLoggedIn && user.name) {
+                // Hiển thị tên từ user.name
+                usernameEl.textContent = user.name;
+                
+                // Hiển thị chữ cái đầu của tên
+                avatarEl.textContent = user.name.charAt(0).toUpperCase();
+                avatarEl.style.background = "#c53030"; // Màu đỏ khi đã login
+                
+                // Click để Đăng xuất
+                profileBtn.onclick = function() {
+                    if(confirm("Bạn có muốn đăng xuất không?")) {
+                        localStorage.removeItem('currentUser'); // Xóa đúng key này
+                        window.location.reload(); // Load lại trang
+                    }
+                };
+                return; // Thoát hàm, không chạy xuống phần "Khách" bên dưới
+            }
+        }
+
+        // 3. Nếu không có user hoặc chưa login (Trạng thái Khách)
+        usernameEl.textContent = "Khách";
+        avatarEl.textContent = "?";
+        avatarEl.style.background = "#718096"; // Màu xám khi là khách
+        
+        profileBtn.onclick = function() {
+            window.location.href = "/dangnhap";
+        };
+    });
+</script>

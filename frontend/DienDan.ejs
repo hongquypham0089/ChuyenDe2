@@ -1,0 +1,483 @@
+<%- include('partials/Header') %>
+
+    <!-- Forum Container -->
+    <div class="forum-container">
+        <!-- Forum Main Content -->
+        <div class="forum-main">
+            <!-- Forum Header -->
+            <div class="forum-header">
+                <div class="forum-title">
+                    <h1>Diễn đàn sinh viên</h1>
+                    <p>Thảo luận, chia sẻ kinh nghiệm và kết nối với cộng đồng</p>
+                </div>
+                <button class="btn-create" onclick="openCreatePostModal()">
+                    <i class="fas fa-plus-circle"></i> Tạo bài viết mới
+                </button>
+            </div>
+
+            <!-- Forum Tabs -->
+            <div class="forum-tabs">
+                <div class="forum-tab active" onclick="filterTopics('all')">Tất cả</div>
+                <div class="forum-tab" onclick="filterTopics('hot')">Thịnh hành</div>
+                <div class="forum-tab" onclick="filterTopics('unanswered')">Chưa trả lời</div>
+                <div class="forum-tab" onclick="filterTopics('my')">Bài viết của tôi</div>
+            </div>
+
+            <!-- Forum Search -->
+            <div class="forum-search">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="topicSearch" placeholder="Tìm kiếm trong diễn đàn..." onkeyup="searchTopics()">
+                </div>
+            </div>
+
+            <!-- Topic List -->
+            <div class="topic-list" id="topicList">
+                <!-- Topic 1 - Pinned -->
+                <div class="topic-item pinned" onclick="viewTopic(1)">
+                    <div class="topic-avatar">📢</div>
+                    <div class="topic-content">
+                        <div class="topic-header">
+                            <span class="topic-title">[Thông báo] Quy định mới về đăng bài trên diễn đàn</span>
+                            <span class="topic-badge badge-pinned">Ghim</span>
+                            <span class="topic-badge badge-hot">Hot</span>
+                        </div>
+                        <div class="topic-meta">
+                            <span class="topic-author">
+                                <i class="fas fa-user"></i> Admin
+                            </span>
+                            <span><i class="fas fa-clock"></i> 2 giờ trước</span>
+                            <span>Danh mục: Thông báo</span>
+                        </div>
+                    </div>
+                    <div class="topic-stats">
+                        <span><i class="fas fa-eye"></i> 2.3K</span>
+                        <span><i class="fas fa-comment"></i> 45</span>
+                    </div>
+                    <div class="last-post">
+                        <div class="last-post-avatar">MT</div>
+                        <div class="last-post-info">
+                            <div class="name">Minh Thư</div>
+                            <div class="time">5 phút trước</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 2 -->
+                <div class="topic-item" onclick="viewTopic(2)">
+                    <div class="topic-avatar">💻</div>
+                    <div class="topic-content">
+                        <div class="topic-header">
+                            <span class="topic-title">Kinh nghiệm học lập trình web cho người mới bắt đầu</span>
+                            <span class="topic-badge badge-hot">Hot</span>
+                        </div>
+                        <div class="topic-meta">
+                            <span class="topic-author">
+                                <i class="fas fa-user"></i> Nguyễn Văn A
+                            </span>
+                            <span><i class="fas fa-clock"></i> 5 giờ trước</span>
+                            <span>Danh mục: Học tập</span>
+                        </div>
+                    </div>
+                    <div class="topic-stats">
+                        <span><i class="fas fa-eye"></i> 1.2K</span>
+                        <span><i class="fas fa-comment"></i> 23</span>
+                    </div>
+                    <div class="last-post">
+                        <div class="last-post-avatar">QH</div>
+                        <div class="last-post-info">
+                            <div class="name">Quang Huy</div>
+                            <div class="time">15 phút trước</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 3 -->
+                <div class="topic-item" onclick="viewTopic(3)">
+                    <div class="topic-avatar">🤖</div>
+                    <div class="topic-content">
+                        <div class="topic-header">
+                            <span class="topic-title">Tổng hợp tài liệu học AI miễn phí chất lượng cao</span>
+                            <span class="topic-badge badge-new">Mới</span>
+                        </div>
+                        <div class="topic-meta">
+                            <span class="topic-author">
+                                <i class="fas fa-user"></i> Trần Thị B
+                            </span>
+                            <span><i class="fas fa-clock"></i> 1 ngày trước</span>
+                            <span>Danh mục: Tài liệu</span>
+                        </div>
+                    </div>
+                    <div class="topic-stats">
+                        <span><i class="fas fa-eye"></i> 890</span>
+                        <span><i class="fas fa-comment"></i> 15</span>
+                    </div>
+                    <div class="last-post">
+                        <div class="last-post-avatar">LH</div>
+                        <div class="last-post-info">
+                            <div class="name">Lan Hương</div>
+                            <div class="time">1 giờ trước</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 4 -->
+                <div class="topic-item" onclick="viewTopic(4)">
+                    <div class="topic-avatar">🎓</div>
+                    <div class="topic-content">
+                        <div class="topic-header">
+                            <span class="topic-title">Chia sẻ kinh nghiệm ôn thi chứng chỉ IELTS 8.0</span>
+                        </div>
+                        <div class="topic-meta">
+                            <span class="topic-author">
+                                <i class="fas fa-user"></i> Minh Anh
+                            </span>
+                            <span><i class="fas fa-clock"></i> 2 ngày trước</span>
+                            <span>Danh mục: Học tập</span>
+                        </div>
+                    </div>
+                    <div class="topic-stats">
+                        <span><i class="fas fa-eye"></i> 1.5K</span>
+                        <span><i class="fas fa-comment"></i> 34</span>
+                    </div>
+                    <div class="last-post">
+                        <div class="last-post-avatar">KD</div>
+                        <div class="last-post-info">
+                            <div class="name">Khánh Duy</div>
+                            <div class="time">3 giờ trước</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 5 -->
+                <div class="topic-item" onclick="viewTopic(5)">
+                    <div class="topic-avatar">💼</div>
+                    <div class="topic-content">
+                        <div class="topic-header">
+                            <span class="topic-title">Cơ hội thực tập tại các công ty công nghệ hàng đầu</span>
+                        </div>
+                        <div class="topic-meta">
+                            <span class="topic-author">
+                                <i class="fas fa-user"></i> Hoàng Tuấn
+                            </span>
+                            <span><i class="fas fa-clock"></i> 3 ngày trước</span>
+                            <span>Danh mục: Việc làm</span>
+                        </div>
+                    </div>
+                    <div class="topic-stats">
+                        <span><i class="fas fa-eye"></i> 2.1K</span>
+                        <span><i class="fas fa-comment"></i> 56</span>
+                    </div>
+                    <div class="last-post">
+                        <div class="last-post-avatar">NA</div>
+                        <div class="last-post-info">
+                            <div class="name">Ngọc Anh</div>
+                            <div class="time">30 phút trước</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 6 -->
+                <div class="topic-item" onclick="viewTopic(6)">
+                    <div class="topic-avatar">🎸</div>
+                    <div class="topic-content">
+                        <div class="topic-header">
+                            <span class="topic-title">Tìm bạn cùng đam mê guitar acoustic</span>
+                        </div>
+                        <div class="topic-meta">
+                            <span class="topic-author">
+                                <i class="fas fa-user"></i> Guitarist
+                            </span>
+                            <span><i class="fas fa-clock"></i> 4 ngày trước</span>
+                            <span>Danh mục: Giao lưu</span>
+                        </div>
+                    </div>
+                    <div class="topic-stats">
+                        <span><i class="fas fa-eye"></i> 456</span>
+                        <span><i class="fas fa-comment"></i> 12</span>
+                    </div>
+                    <div class="last-post">
+                        <div class="last-post-avatar">VP</div>
+                        <div class="last-post-info">
+                            <div class="name">Văn Phúc</div>
+                            <div class="time">2 giờ trước</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">4</button>
+                <button class="page-btn">5</button>
+                <button class="page-btn"><i class="fas fa-ellipsis-h"></i></button>
+                <button class="page-btn">10</button>
+                <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Forum Sidebar -->
+        <div class="forum-sidebar">
+            <!-- User Card -->
+            <div class="user-card">
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <div class="user-avatar" style="width: 60px; height: 60px; font-size: 24px;">NA</div>
+                    <div>
+                        <h3 style="font-size: 18px;">Nguyễn Văn A</h3>
+                        <p style="color: #64748b;">Đã tham gia: 01/2024</p>
+                    </div>
+                </div>
+                <div class="user-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">156</div>
+                        <div class="stat-label">Bài viết</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1.2K</div>
+                        <div class="stat-label">Điểm</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">45</div>
+                        <div class="stat-label">Lượt thích</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories -->
+            <div class="categories-card">
+                <h3><i class="fas fa-folder" style="color: #c53030;"></i> Danh mục</h3>
+                <ul class="category-list">
+                    <li class="category-item" onclick="filterByCategory('all')">
+                        <span class="category-name"><i class="fas fa-list"></i> Tất cả</span>
+                        <span class="category-count">245</span>
+                    </li>
+                    <li class="category-item" onclick="filterByCategory('announcement')">
+                        <span class="category-name"><i class="fas fa-bullhorn"></i> Thông báo</span>
+                        <span class="category-count">12</span>
+                    </li>
+                    <li class="category-item" onclick="filterByCategory('study')">
+                        <span class="category-name"><i class="fas fa-graduation-cap"></i> Học tập</span>
+                        <span class="category-count">89</span>
+                    </li>
+                    <li class="category-item" onclick="filterByCategory('career')">
+                        <span class="category-name"><i class="fas fa-briefcase"></i> Việc làm</span>
+                        <span class="category-count">34</span>
+                    </li>
+                    <li class="category-item" onclick="filterByCategory('material')">
+                        <span class="category-name"><i class="fas fa-file-pdf"></i> Tài liệu</span>
+                        <span class="category-count">56</span>
+                    </li>
+                    <li class="category-item" onclick="filterByCategory('social')">
+                        <span class="category-name"><i class="fas fa-heart"></i> Giao lưu</span>
+                        <span class="category-count">23</span>
+                    </li>
+                    <li class="category-item" onclick="filterByCategory('qa')">
+                        <span class="category-name"><i class="fas fa-question-circle"></i> Hỏi đáp</span>
+                        <span class="category-count">31</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Hot Topics -->
+            <div class="hot-topics">
+                <h3><i class="fas fa-fire" style="color: #c53030;"></i> Thịnh hành</h3>
+                <div class="hot-topic-item" onclick="viewTopic(1)">
+                    <div class="hot-topic-title">[Thông báo] Quy định mới về đăng bài trên diễn đàn</div>
+                    <div class="hot-topic-meta">
+                        <span><i class="fas fa-eye"></i> 2.3K</span>
+                        <span><i class="fas fa-comment"></i> 45</span>
+                    </div>
+                </div>
+                <div class="hot-topic-item" onclick="viewTopic(2)">
+                    <div class="hot-topic-title">Kinh nghiệm học lập trình web cho người mới bắt đầu</div>
+                    <div class="hot-topic-meta">
+                        <span><i class="fas fa-eye"></i> 1.2K</span>
+                        <span><i class="fas fa-comment"></i> 23</span>
+                    </div>
+                </div>
+                <div class="hot-topic-item" onclick="viewTopic(5)">
+                    <div class="hot-topic-title">Cơ hội thực tập tại các công ty công nghệ hàng đầu</div>
+                    <div class="hot-topic-meta">
+                        <span><i class="fas fa-eye"></i> 2.1K</span>
+                        <span><i class="fas fa-comment"></i> 56</span>
+                    </div>
+                </div>
+                <div class="hot-topic-item" onclick="viewTopic(4)">
+                    <div class="hot-topic-title">Chia sẻ kinh nghiệm ôn thi chứng chỉ IELTS 8.0</div>
+                    <div class="hot-topic-meta">
+                        <span><i class="fas fa-eye"></i> 1.5K</span>
+                        <span><i class="fas fa-comment"></i> 34</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Forum Stats -->
+            <div class="stats-card">
+                <h3 style="margin-bottom: 16px;"><i class="fas fa-chart-bar" style="color: #c53030;"></i> Thống kê</h3>
+                <div class="stats-grid">
+                    <div class="stats-grid-item">
+                        <div class="stats-grid-number">1,234</div>
+                        <div class="stats-grid-label">Thành viên</div>
+                    </div>
+                    <div class="stats-grid-item">
+                        <div class="stats-grid-number">245</div>
+                        <div class="stats-grid-label">Chủ đề</div>
+                    </div>
+                    <div class="stats-grid-item">
+                        <div class="stats-grid-number">1.8K</div>
+                        <div class="stats-grid-label">Bình luận</div>
+                    </div>
+                    <div class="stats-grid-item">
+                        <div class="stats-grid-number">56</div>
+                        <div class="stats-grid-label">Đang online</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Topic Detail Modal -->
+    <div class="modal" id="topicDetailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="topicDetailTitle">[Thông báo] Quy định mới về đăng bài trên diễn đàn</h2>
+                <button class="close-btn" onclick="closeModal('topicDetailModal')"><i class="fas fa-times"></i></button>
+            </div>
+
+            <div class="post-content">
+                <div class="post-author-info">
+                    <div class="post-avatar-large">📢</div>
+                    <div class="post-author-details">
+                        <h3>Admin</h3>
+                        <div class="post-meta">
+                            <span><i class="fas fa-clock"></i> Đăng lúc: 09:30, 04/03/2026</span>
+                            <span><i class="fas fa-eye"></i> 2.3K lượt xem</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="post-body">
+                    <p>Kính gửi toàn thể thành viên diễn đàn,</p>
+                    <p>Nhằm nâng cao chất lượng thảo luận và tạo môi trường lành mạnh cho cộng đồng, CLB Connect xin thông báo một số quy định mới về việc đăng bài trên diễn đàn như sau:</p>
+                    <p><strong>1. Nội dung bài viết</strong><br>
+                    - Bài viết phải liên quan đến chủ đề của danh mục đã chọn.<br>
+                    - Không đăng nội dung spam, quảng cáo trái phép.<br>
+                    - Không sử dụng ngôn từ thiếu văn hóa, xúc phạm người khác.</p>
+                    <p><strong>2. Tiêu đề bài viết</strong><br>
+                    - Tiêu đề phải ngắn gọn, rõ ràng, phản ánh đúng nội dung.<br>
+                    - Không viết tiêu đề bằng chữ in hoa toàn bộ.</p>
+                    <p><strong>3. Hình ảnh và tài liệu đính kèm</strong><br>
+                    - Hình ảnh không vi phạm bản quyền, không phản cảm.<br>
+                    - Tài liệu chia sẻ phải rõ nguồn gốc.</p>
+                    <p>Các quy định này có hiệu lực từ ngày 10/03/2026. Mọi vi phạm sẽ bị xóa bài và cảnh cáo tùy theo mức độ.</p>
+                    <p>Trân trọng,<br>Ban quản trị CLB Connect</p>
+                </div>
+            </div>
+
+            <!-- Comments -->
+            <div class="comments-section">
+                <h3>Bình luận (12)</h3>
+
+                <div class="comment-item">
+                    <div class="comment-avatar">MT</div>
+                    <div class="comment-content">
+                        <div class="comment-header">
+                            <span class="comment-author">Minh Thư</span>
+                            <span class="comment-time">5 phút trước</span>
+                        </div>
+                        <div class="comment-text">Cảm ơn admin đã thông báo! Mình sẽ tuân thủ quy định.</div>
+                        <div class="comment-actions">
+                            <span><i class="far fa-thumbs-up"></i> 12</span>
+                            <span>Trả lời</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comment-item">
+                    <div class="comment-avatar">QH</div>
+                    <div class="comment-content">
+                        <div class="comment-header">
+                            <span class="comment-author">Quang Huy</span>
+                            <span class="comment-time">15 phút trước</span>
+                        </div>
+                        <div class="comment-text">Cho mình hỏi, có được đăng bài tuyển dụng không ạ?</div>
+                        <div class="comment-actions">
+                            <span><i class="far fa-thumbs-up"></i> 8</span>
+                            <span>Trả lời</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="add-comment">
+                    <div class="comment-avatar">NA</div>
+                    <input type="text" class="comment-input" placeholder="Viết bình luận...">
+                    <button class="comment-submit" onclick="addComment()">Gửi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Post Modal -->
+    <div class="modal" id="createPostModal">
+        <div class="modal-content create-post-modal">
+            <div class="modal-header">
+                <h2>Tạo bài viết mới</h2>
+                <button class="close-btn" onclick="closeModal('createPostModal')"><i class="fas fa-times"></i></button>
+            </div>
+
+            <form id="createPostForm" onsubmit="event.preventDefault(); createPost();">
+                <div class="form-group">
+                    <label>Tiêu đề</label>
+                    <input type="text" id="postTitle" placeholder="Nhập tiêu đề bài viết..." required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Danh mục</label>
+                        <select id="postCategory" required>
+                            <option value="">Chọn danh mục</option>
+                            <option value="announcement">Thông báo</option>
+                            <option value="study">Học tập</option>
+                            <option value="career">Việc làm</option>
+                            <option value="material">Tài liệu</option>
+                            <option value="social">Giao lưu</option>
+                            <option value="qa">Hỏi đáp</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tags (phân cách bằng dấu phẩy)</label>
+                        <input type="text" id="postTags" placeholder="VD: học tập, kinh nghiệm, lập trình">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Nội dung</label>
+                    <textarea id="postContent" placeholder="Viết nội dung bài viết..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Đính kèm hình ảnh/tài liệu</label>
+                    <input type="file" id="postAttachment" multiple accept="image/*,.pdf,.doc,.docx">
+                </div>
+
+                <div class="form-group">
+                    <label style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" id="pinPost"> Ghim bài viết (chỉ dành cho Admin)
+                    </label>
+                </div>
+
+                <div style="display: flex; gap: 16px; margin-top: 24px;">
+                    <button type="submit" class="btn-create" style="flex: 2;">Đăng bài</button>
+                    <button type="button" class="btn-create" style="flex: 1; background: #f1f5f9; color: #1a2639;" onclick="closeModal('createPostModal')">Hủy</button>
+                </div>
+            </form>
+        </div>
+    </div>
+<link rel="stylesheet" href="CSS/DienDan.css">
+<link rel="stylesheet" href="JS/DienDan.js">
+
+<%- include('partials/Footer') %>

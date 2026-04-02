@@ -1,0 +1,93 @@
+<link rel="stylesheet" href="CSS/Home.css">
+<link rel="stylesheet" href="JS/Home.js">
+<%- include('partials/Header') %>
+
+<!-- Main Content -->
+<div class="container" id="mainContent">
+    <!-- Hero Banner -->
+    <div class="hero-banner">
+        <div class="hero-content">
+            <h1 class="hero-title" id="heroTitle">Chào mừng đến với CLB Connect! 🎉</h1>
+            <p class="hero-subtitle" id="heroSubtitle">Khám phá những hoạt động sôi nổi nhất từ các câu lạc bộ sinh viên. Kết nối đam mê, phát triển bản thân!</p>
+            
+            <!-- <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="hero-stat-number">50+</span>
+                    <span class="hero-stat-label">Câu lạc bộ</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">200+</span>
+                    <span class="hero-stat-label">Sự kiện</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">5000+</span>
+                    <span class="hero-stat-label">Thành viên</span>
+                </div>
+            </div> -->
+        
+        </div>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="filter-section">
+        <div class="filter-header">
+            <h3><i class="fas fa-filter"></i> Bộ lọc nhanh</h3>
+            <div class="my-clubs" id="myClubsList">
+                <!-- My clubs sẽ được load từ API nếu đã đăng nhập -->
+            </div>
+        </div>
+        <div class="club-filter" id="clubFilter">
+            <div class="filter-chip active" onclick="filterByClub('all')">Tất cả CLB</div>
+            <div class="filter-chip" onclick="filterByClub('CLB Tin học')">CLB Tin học</div>
+            <div class="filter-chip" onclick="filterByClub('CLB Âm nhạc')">CLB Âm nhạc</div>
+            <div class="filter-chip" onclick="filterByClub('CLB Tình nguyện')">CLB Tình nguyện</div>
+            <div class="filter-chip" onclick="filterByClub('CLB Thể thao')">CLB Thể thao</div>
+            <div class="filter-chip" onclick="filterByClub('CLB Tiếng Anh')">CLB Tiếng Anh</div>
+            <div class="filter-chip" onclick="filterByClub('CLB Robot')">CLB Robot</div>
+            <div class="filter-chip" onclick="filterByClub('CLB Mỹ thuật')">CLB Mỹ thuật</div>
+        </div>
+    </div>
+
+    <!-- Featured Posts -->
+    <div class="featured-posts" id="featuredPosts">
+        <div class="featured-post">
+            <div class="featured-image">
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600" alt="Featured">
+            </div>
+            <div class="featured-content">
+                <span class="featured-category">🔥 NỔI BẬT</span>
+                <h3 class="featured-title">Đại hội CLB Tin học nhiệm kỳ 2026-2027</h3>
+                <div class="featured-meta">
+                    <span><i class="far fa-eye"></i> 1.2K lượt xem</span>
+                    <span><i class="far fa-heart"></i> 234 thích</span>
+                </div>
+            </div>
+        </div>
+        <div class="featured-post">
+            <div class="featured-image">
+                <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600" alt="Featured">
+            </div>
+            <div class="featured-content">
+                <span class="featured-category">⚡ XU HƯỚNG</span>
+                <h3 class="featured-title">Workshop "AI cho mọi người" - CLB Tin học</h3>
+                <div class="featured-meta">
+                    <span><i class="far fa-eye"></i> 890 lượt xem</span>
+                    <span><i class="far fa-heart"></i> 156 thích</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Posts Container -->
+    <div id="postsContainer">
+        <!-- Posts sẽ được load từ API hoặc hiển thị demo -->
+    </div>
+
+    <!-- Load More Button -->
+    <div class="load-more">
+        <button class="btn-load" id="loadMoreBtn" onclick="loadMorePosts()">
+            <i class="fas fa-sync-alt"></i> Xem thêm bài viết
+        </button>
+    </div>
+</div>
+<%- include('partials/Footer') %>

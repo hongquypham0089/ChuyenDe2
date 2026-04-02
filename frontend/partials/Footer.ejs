@@ -1,0 +1,364 @@
+<style>
+    /* =========================
+       FOOTER STYLES ONLY
+    ========================= */
+    .footer {
+        font-family: 'Inter', sans-serif;
+        background: #1a2639;
+        color: white;
+        margin-top: 60px;
+        position: relative;
+    }
+
+    .footer-wave {
+        position: absolute;
+        top: -50px;
+        left: 0;
+        right: 0;
+        height: 50px;
+        background: linear-gradient(to right bottom, transparent 49%, #1a2639 50%);
+    }
+
+    .footer-main {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 60px 20px 40px;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1.5fr;
+        gap: 40px;
+    }
+
+    .footer-logo {
+        font-family: 'Playfair Display', serif;
+        font-size: 28px;
+        font-weight: 800;
+        color: #c53030;
+        margin-bottom: 20px;
+    }
+
+    .footer-about {
+        color: #a0aec0;
+        font-size: 14px;
+        line-height: 1.8;
+        margin-bottom: 20px;
+    }
+
+    .footer-social {
+        display: flex;
+        gap: 15px;
+    }
+
+    .footer-social a {
+        width: 40px;
+        height: 40px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        transition: all 0.3s;
+        text-decoration: none;
+    }
+
+    .footer-social a:hover {
+        background: #c53030;
+        transform: translateY(-3px);
+    }
+
+    .footer-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    .footer-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 40px;
+        height: 3px;
+        background: #c53030;
+        border-radius: 2px;
+    }
+
+    .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-links li {
+        margin-bottom: 12px;
+    }
+
+    .footer-links a {
+        color: #a0aec0;
+        text-decoration: none;
+        font-size: 14px;
+        transition: all 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .footer-links a:hover {
+        color: #c53030;
+        transform: translateX(5px);
+    }
+
+    .footer-links i {
+        font-size: 12px;
+        color: #c53030;
+    }
+
+    .footer-contact p {
+        color: #a0aec0;
+        font-size: 14px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .footer-contact i {
+        width: 20px;
+        color: #c53030;
+        font-size: 16px;
+    }
+
+    .footer-newsletter {
+        margin-top: 20px;
+    }
+
+    .newsletter-input {
+        display: flex;
+        background: rgba(255,255,255,0.1);
+        border-radius: 40px;
+        overflow: hidden;
+    }
+
+    .newsletter-input input {
+        flex: 1;
+        background: transparent;
+        border: none;
+        padding: 12px 16px;
+        color: white;
+        font-size: 14px;
+        outline: none;
+    }
+
+    .newsletter-input input::placeholder {
+        color: #718096;
+    }
+
+    .newsletter-input button {
+        background: #c53030;
+        border: none;
+        color: white;
+        padding: 0 20px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .newsletter-input button:hover {
+        background: #9b2c2c;
+    }
+
+    .footer-bottom {
+        border-top: 1px solid #2d3748;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #718096;
+        font-size: 14px;
+    }
+
+    .footer-bottom-links {
+        display: flex;
+        gap: 20px;
+    }
+
+    .footer-bottom-links a {
+        color: #718096;
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .footer-bottom-links a:hover {
+        color: #c53030;
+    }
+
+    /* =========================
+       TỐI ƯU RESPONSIVE
+    ========================= */
+    
+    /* Cho Tablet (Màn hình vừa) */
+    @media (max-width: 1024px) {
+        .footer-main {
+            grid-template-columns: repeat(2, 1fr); /* Chuyển thành 2 cột */
+            gap: 40px 30px; /* Điều chỉnh khoảng cách dọc và ngang */
+            padding: 50px 20px 30px;
+        }
+    }
+
+    /* Cho Điện thoại (Màn hình nhỏ) */
+    @media (max-width: 768px) {
+        .footer {
+            margin-top: 40px; /* Giảm bớt khoảng cách phía trên footer */
+        }
+
+        .footer-main {
+            grid-template-columns: 1fr; /* Trở về 1 cột duy nhất */
+            gap: 35px; /* Tạo không gian vừa phải giữa các khối */
+            text-align: center; /* Căn giữa toàn bộ chữ */
+            padding: 40px 15px 20px;
+        }
+
+        .footer-title::after {
+            left: 50%;
+            transform: translateX(-50%); /* Căn giữa vạch đỏ dưới tiêu đề */
+        }
+
+        /* Xử lý căn giữa cho các phần tử dùng flexbox */
+        .footer-social {
+            justify-content: center;
+        }
+
+        .footer-links a {
+            justify-content: center; /* Căn giữa link và icon mũi tên */
+        }
+
+        .footer-links a:hover {
+            transform: translateY(-3px); /* Đổi hiệu ứng di chuyển lên thay vì sang phải trên mobile */
+        }
+
+        .footer-contact p {
+            justify-content: center; /* Căn giữa thông tin liên hệ và icon */
+        }
+
+        .newsletter-input {
+            max-width: 400px; /* Giới hạn chiều rộng thanh nhập email để không bị quá dài trên mobile ngang */
+            margin: 0 auto; /* Đưa thanh nhập email ra giữa */
+        }
+
+        .footer-bottom {
+            flex-direction: column;
+            gap: 15px;
+            text-align: center;
+            padding: 20px 15px;
+        }
+
+        .footer-bottom-links {
+            justify-content: center;
+            flex-wrap: wrap; /* Cho phép rớt dòng nếu màn hình quá hẹp */
+        }
+    }
+
+    /* Dành riêng cho màn hình điện thoại rất nhỏ (như iPhone SE) */
+    @media (max-width: 480px) {
+        .footer-logo {
+            font-size: 24px;
+        }
+        
+        .footer-title {
+            font-size: 16px;
+        }
+
+        .newsletter-input input {
+            padding: 10px 12px; /* Giảm padding để ô nhập liệu cân đối hơn */
+        }
+    }
+</style>
+
+<footer class="footer">
+    <div class="footer-wave"></div>
+    
+    <div class="footer-main">
+        <div>
+            <div class="footer-logo">CLB Connect</div>
+            <p class="footer-about">
+                Nền tảng kết nối sinh viên với các câu lạc bộ trong trường đại học. 
+                Nơi chia sẻ đam mê, kết nối sáng tạo và phát triển bản thân.
+            </p>
+            </div>
+
+        <div>
+            <h3 class="footer-title">Khám phá</h3>
+            <ul class="footer-links">
+                <li><a href="#"><i class="fas fa-chevron-right"></i> Câu lạc bộ</a></li>
+                <li><a href="#"><i class="fas fa-chevron-right"></i> Sự kiện</a></li>
+                <li><a href="#"><i class="fas fa-chevron-right"></i> Tin tức</a></li>
+                <li><a href="#"><i class="fas fa-chevron-right"></i> Diễn đàn</a></li>
+                <li><a href="#"><i class="fas fa-chevron-right"></i> Bảng xếp hạng</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h3 class="footer-title">Hỗ trợ</h3>
+            <ul class="footer-links">
+                <li><a href="#"><i class="fas fa-chevron-right"></i> Trung tâm trợ giúp</a></li>
+                <li><a href="#"><i class="fas fa-chevron-right"></i> Hướng dẫn sử dụng</a></li>
+                <li><a href="#"><i class="fas fa-chevron-right"></i> Báo cáo sự cố</a></li>
+                <li><a href="#"><i class="fas fa-chevron-right"></i> Liên hệ</a></li>
+                <li><a href="#"><i class="fas fa-chevron-right"></i> Điều khoản dịch vụ</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h3 class="footer-title">Liên hệ</h3>
+            <div class="footer-contact">
+                <p><i class="fas fa-map-marker-alt"></i> Đại học Bình Dương - BDU</p>
+                <p><i class="fas fa-phone-alt"></i> 024 1234 5678</p>
+                <p><i class="fas fa-envelope"></i> contact@clbconnect.vn</p>
+            </div>
+            
+            <div class="footer-newsletter">
+                <h4 style="margin-bottom: 15px; font-size: 16px;">Đăng ký nhận tin</h4>
+                <div class="newsletter-input">
+                    <input type="email" id="newsletter-email" placeholder="Email của bạn...">
+                    <button id="btn-subscribe"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </footer>
+
+<script>
+    /* =========================
+       FOOTER SCRIPTS ONLY
+    ========================= */
+    document.addEventListener("DOMContentLoaded", function() {
+        const btnSubscribe = document.getElementById("btn-subscribe");
+        const emailInput = document.getElementById("newsletter-email");
+
+        if (btnSubscribe && emailInput) {
+            btnSubscribe.addEventListener("click", function() {
+                const email = emailInput.value.trim();
+                
+                if (email === "") {
+                    alert("Vui lòng nhập địa chỉ email của bạn!");
+                    return;
+                }
+
+                // Basic email validation regex
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    alert("Email không hợp lệ. Vui lòng kiểm tra lại!");
+                    return;
+                }
+
+                // Simulate API Call for Newsletter
+                alert(`Cảm ơn bạn! Đã đăng ký nhận tin thành công với email: ${email}`);
+                emailInput.value = ""; // Clear input sau khi thành công
+            });
+        }
+    });
+</script>
