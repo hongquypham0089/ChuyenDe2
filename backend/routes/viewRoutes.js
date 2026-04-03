@@ -41,4 +41,13 @@ router.get("/admin", (req, res) => {
     res.render("admin", { title: "Diễn đàn" });
 });
 
+// Trang thông tin cá nhân
+router.get("/Profile", (req, res) => {
+    // Thêm user: {} vào đây để EJS không báo lỗi undefined
+    res.render("Profile", { 
+        title: "Thông tin cá nhân", 
+        user: {} 
+    });
+});
+
 module.exports = router;

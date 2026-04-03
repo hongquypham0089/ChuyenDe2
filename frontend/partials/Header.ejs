@@ -147,6 +147,52 @@
         border-radius: 3px 3px 0 0;
     }
 
+
+
+
+
+    /* Style cho Dropdown Menu */
+    .user-dropdown-content {
+        display: none; /* Mặc định ẩn */
+        position: absolute;
+        top: 110%;
+        right: 0;
+        background-color: white;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+        border-radius: 8px;
+        z-index: 1000;
+        border: 1px solid #e2e8f0;
+        overflow: hidden;
+    }
+
+    .user-dropdown-content a {
+        color: #2d3748;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        font-size: 14px;
+        transition: background 0.2s;
+    }
+
+    .user-dropdown-content a:hover {
+        background-color: #f7fafc;
+        color: #c53030;
+    }
+
+    .user-dropdown-content hr {
+        margin: 0;
+        border: none;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    /* Hiển thị menu khi có class 'show' */
+    .user-dropdown-content.show {
+        display: block;
+        width: 230px;
+    }
+
+
     /* =========================
        TỐI ƯU RESPONSIVE
     ========================= */
@@ -211,6 +257,7 @@
             padding: 12px 0;
             font-size: 14px;
         }
+        
     }
 </style>
 
@@ -232,9 +279,17 @@
                 Nơi hội tụ tinh hoa sinh viên
             </div>
         </div>
-        <div class="user-info" id="user-profile-btn">
+        <div class="user-info" id="user-profile-btn" style="position: relative;">
             <span>Xin chào, <strong id="username">Khách</strong></span>
             <div class="user-avatar" id="userAvatar">?</div>
+            
+            <div id="user-dropdown" class="user-dropdown-content">
+                <a href="/Profile" onclick="window.location.href='/profile';">
+                    <i class="fas fa-user-circle"></i> Trang cá nhân
+                </a>
+                <hr>
+                <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+            </div>
         </div>
     </div>
 
@@ -261,41 +316,54 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // 1. Lấy đối tượng 'currentUser' từ localStorage
         const storedUser = localStorage.getItem('currentUser');
-        
         const usernameEl = document.getElementById("username");
         const avatarEl = document.getElementById("userAvatar");
         const profileBtn = document.getElementById("user-profile-btn");
+        const dropdown = document.getElementById("user-dropdown");
+        const logoutBtn = document.getElementById("logout-btn");
 
-        // 2. Kiểm tra nếu có dữ liệu người dùng
         if (storedUser) {
-            // Chuyển chuỗi JSON thành đối tượng Javascript
             const user = JSON.parse(storedUser);
 
             if (user.isLoggedIn && user.name) {
-                // Hiển thị tên từ user.name
                 usernameEl.textContent = user.name;
-                
-                // Hiển thị chữ cái đầu của tên
                 avatarEl.textContent = user.name.charAt(0).toUpperCase();
-                avatarEl.style.background = "#c53030"; // Màu đỏ khi đã login
-                
-                // Click để Đăng xuất
-                profileBtn.onclick = function() {
+                avatarEl.style.background = "#c53030";
+
+                // Click vào profile để bật/tắt menu sổ xuống
+                profileBtn.onclick = function(e) {
+                    if (e.target.closest('a')) {
+                        return; 
+                    }
+
+                    e.stopPropagation(); // Ngăn sự kiện click lan ra ngoài window
+                    dropdown.classList.toggle("show");
+                };
+
+                // Xử lý nút Đăng xuất trong menu
+                logoutBtn.onclick = function(e) {
+                    e.preventDefault();
                     if(confirm("Bạn có muốn đăng xuất không?")) {
-                        localStorage.removeItem('currentUser'); // Xóa đúng key này
-                        window.location.reload(); // Load lại trang
+                        localStorage.removeItem('currentUser');
+                        window.location.reload();
                     }
                 };
-                return; // Thoát hàm, không chạy xuống phần "Khách" bên dưới
+                
+                // Đóng menu nếu click ra ngoài vùng user-info
+                window.onclick = function(event) {
+                    if (!profileBtn.contains(event.target)) {
+                        dropdown.classList.remove("show");
+                    }
+                };
+                return;
             }
         }
 
-        // 3. Nếu không có user hoặc chưa login (Trạng thái Khách)
+        // Trạng thái Khách
         usernameEl.textContent = "Khách";
         avatarEl.textContent = "?";
-        avatarEl.style.background = "#718096"; // Màu xám khi là khách
+        avatarEl.style.background = "#718096";
         
         profileBtn.onclick = function() {
             window.location.href = "/dangnhap";

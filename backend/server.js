@@ -319,6 +319,86 @@ app.post("/api/posts/save", ensureDB, async (req, res) => {
     } catch (err) { res.status(500).json({ message: "Save error" }); }
 });
 
+
+// profile
+// 1. API Lấy thông tin chi tiết user
+app.get("/api/user/profile/:id", ensureDB, async (req, res) => {
+    try {
+        const result = await pool.request()
+            .input("id", sql.Int, req.params.id)
+            .query(`
+                SELECT id, full_name, email, phone, dob, gender, bio, avatar, hobbies 
+                FROM users 
+                WHERE id = @id
+            `);
+        
+        if (result.recordset.length > 0) {
+            res.json(result.recordset[0]);
+        } else {
+            res.status(404).json({ message: "Không tìm thấy người dùng" });
+        }
+    } catch (err) {
+        res.status(500).json({ message: "Lỗi Server khi lấy profile" });
+    }
+});
+
+// 2. API Cập nhật thông tin user
+app.post("/api/user/update", ensureDB, async (req, res) => {
+    const { id, full_name, phone, dob, gender, bio, avatar, hobbies } = req.body;
+    try {
+        await pool.request()
+            .input("id", sql.Int, id)
+            .input("full_name", sql.NVarChar, full_name)
+            .input("phone", sql.VarChar, phone)
+            .input("dob", sql.Date, dob)
+            .input("gender", sql.NVarChar, gender)
+            .input("bio", sql.NVarChar, bio)
+            .input("hobbies", sql.NVarChar, hobbies)
+            .input("avatar", sql.NVarChar, avatar) // Lưu Base64
+            .query(`
+                UPDATE users 
+                SET full_name = @full_name, 
+                    phone = @phone, 
+                    dob = @dob, 
+                    gender = @gender, 
+                    bio = @bio, 
+                    avatar = @avatar,
+                    hobbies = @hobbies
+                WHERE id = @id
+            `);
+        res.json({ success: true, message: "Cập nhật thành công!" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Lỗi khi lưu vào Database" });
+    }
+});
+
+// 3. Sửa lại route render trang Profile để không bị lỗi "user is not defined"
+app.get("/profile", (req, res) => {
+    res.render("Profile", { user: {} }); // Truyền object rỗng, JS sẽ fetch data sau
+});
+
+// API lấy danh sách CLB của một User cụ thể
+app.get("/api/user/clubs/:userId", async (req, res) => {
+    try {
+        const result = await pool.request()
+            .input("userId", sql.Int, req.params.userId)
+            .query(`
+                -- Sửa 'name' thành 'club_name' để khớp với database của bạn
+                SELECT id, club_name as name FROM clubs WHERE created_by = @userId
+                UNION
+                SELECT c.id, c.club_name as name 
+                FROM clubs c
+                JOIN club_members cm ON c.id = cm.club_id
+                WHERE cm.user_id = @userId AND cm.status = N'Active'
+            `);
+        res.json(result.recordset);
+    } catch (err) {
+        console.error("Lỗi API Clubs:", err);
+        res.status(500).json({ message: "Lỗi lấy danh sách CLB" });
+    }
+});
+
 // ================= START SERVER =================
 const PORT = 5000;
 app.listen(PORT, () => {

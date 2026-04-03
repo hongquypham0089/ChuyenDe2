@@ -235,7 +235,150 @@ async function handleCreateClub(event) {
         alert("Không thể xử lý ảnh. Vui lòng thử lại với ảnh khác.");
     }
 }
+// Giả sử đây là hàm tạo thẻ CLB của bạn
+function createClubCard(club) {
+    const card = document.createElement('div');
+    card.className = 'club-card';
+    // Khi click vào khung câu lạc bộ
+    card.onclick = () => showClubDetail(club); 
+    
+    card.innerHTML = `
+        <img src="${club.logo}" alt="${club.name}">
+        <h3>${club.name}</h3>
+        <p>${club.category}</p>
+    `;
+    return card;
+}
 
+function showClubDetail(club) {
+    const modal = document.getElementById('clubModal');
+    const modalBody = document.getElementById('modalBody');
+    
+    // Kiểm tra xem các phần tử có tồn tại không để tránh lỗi null
+    const nameEl = document.getElementById('modalClubName');
+    const categoryEl = document.getElementById('modalClubCategory');
+
+    if (nameEl) nameEl.textContent = club.name; 
+    if (categoryEl) categoryEl.textContent = club.category;
+
+    // Render nội dung vào modal
+    if (modalBody) {
+        modalBody.innerHTML = `
+            <div class="modal-detail-content">
+                <img src="${club.cover_url || 'https://via.placeholder.com/400x150?text=CLB+Connect'}" class="modal-detail-banner" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+                
+                <div class="modal-detail-section" style="margin-top: 20px;">
+                    <h3 style="color: #c53030;"><i class="fas fa-info-circle"></i> Giới thiệu</h3>
+                    <p style="line-height: 1.6; color: #4a5568;">${club.description || 'Chưa có mô tả chi tiết.'}</p>
+                </div>
+
+                ${club.achievements ? `
+                <div class="modal-detail-section" style="margin-top: 15px;">
+                    <h3 style="color: #c53030;"><i class="fas fa-trophy"></i> Thành tựu</h3>
+                    <p>${club.achievements}</p>
+                </div>` : ''}
+            </div>
+        `;
+    }
+
+    if (modal) modal.style.display = 'block'; 
+}
+
+function showClubDetail(id) {
+    const club = clubsData.find(c => c.id === id);
+    if (!club) return;
+
+    const modal = document.getElementById('clubModal');
+    const modalBody = document.getElementById('modalBody');
+    const modalJoinBtn = document.getElementById('modalJoinBtn'); // Lấy nút bấm từ footer
+    
+    // 1. Cập nhật Tiêu đề và Category
+    document.getElementById('modalClubName').textContent = club.name;
+    document.getElementById('modalClubCategory').textContent = club.category;
+
+    // 2. Render nội dung thân Modal
+    modalBody.innerHTML = `
+        <div class="modal-detail-content">
+            <div class="detail-banner-wrapper" style="position: relative; margin-bottom: 50px;">
+                <img src="${club.cover_url || 'default-cover.jpg'}" style="width: 100%; height: 220px; object-fit: cover; border-radius: 15px;">
+                <div style="position: absolute; bottom: -40px; left: 30px; display: flex; align-items: flex-end; gap: 15px;">
+                    <img src="${club.logo_url || 'default-logo.png'}" style="width: 100px; height: 100px; border-radius: 20px; border: 5px solid white; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 25px;">
+                <div style="background: #f1f5f9; padding: 15px; border-radius: 12px; text-align: center;">
+                    <i class="fas fa-users" style="color: #c53030;"></i>
+                    <div style="font-weight: bold; font-size: 18px;">${club.memberCount || 0}</div>
+                    <div style="font-size: 12px; color: #64748b;">Thành viên</div>
+                </div>
+                <div style="background: #f1f5f9; padding: 15px; border-radius: 12px; text-align: center;">
+                    <i class="fas fa-calendar-alt" style="color: #c53030;"></i>
+                    <div style="font-weight: bold; font-size: 14px;">Thứ 7 hàng tuần</div>
+                    <div style="font-size: 12px; color: #64748b;">Lịch sinh hoạt</div>
+                </div>
+                <div style="background: #f1f5f9; padding: 15px; border-radius: 12px; text-align: center;">
+                    <i class="fas fa-map-marker-alt" style="color: #c53030;"></i>
+                    <div style="font-weight: bold; font-size: 14px;">Hội trường A</div>
+                    <div style="font-size: 12px; color: #64748b;">Địa điểm</div>
+                </div>
+            </div>
+
+            <div class="modal-detail-section">
+                <h3 style="font-size: 18px; color: #1a2639; margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                    <span style="width: 4px; height: 18px; background: #c53030; display: inline-block; border-radius: 2px;"></span>
+                    Giới thiệu chung
+                </h3>
+                <p style="color: #4a5568; line-height: 1.7;">${club.description}</p>
+            </div>
+
+            <div class="modal-detail-section" style="margin-top: 20px;">
+                <h3 style="font-size: 18px; color: #1a2639; margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                    <span style="width: 4px; height: 18px; background: #c53030; display: inline-block; border-radius: 2px;"></span>
+                    Quyền lợi thành viên
+                </h3>
+                <ul style="padding-left: 20px; color: #4a5568;">
+                    <li>Được đào tạo kỹ năng chuyên môn miễn phí.</li>
+                    <li>Cấp giấy chứng nhận hoạt động ngoại khóa.</li>
+                    <li>Mở rộng mạng lưới kết nối bạn bè cùng đam mê.</li>
+                </ul>
+            </div>
+        </div>
+    `;
+
+    // 3. LOGIC XỬ LÝ NÚT BẤM (QUAN TRỌNG)
+    if (modalJoinBtn) {
+        const currentUserId = currentUser ? Number(currentUser.id || currentUser.user_id) : null;
+        const clubCreatorId = Number(club.created_by);
+
+        if (currentUserId && clubCreatorId === currentUserId) {
+            // Nếu là chủ CLB
+            modalJoinBtn.innerHTML = `<i class="fas fa-crown"></i> Bạn là chủ CLB`;
+            modalJoinBtn.style.background = "#28a745"; // Màu xanh lá
+            modalJoinBtn.disabled = true;
+            modalJoinBtn.onclick = null;
+        } else {
+            // Nếu là người dùng bình thường hoặc chưa tham gia
+            modalJoinBtn.innerHTML = `<i class="fas fa-sign-in-alt"></i> Tham gia CLB`;
+            modalJoinBtn.style.background = "#c53030"; // Màu đỏ mặc định
+            modalJoinBtn.disabled = false;
+            modalJoinBtn.onclick = () => handleJoinClub(club.id);
+        }
+    }
+
+    modal.style.display = 'flex'; 
+}
+
+// Đảm bảo hàm đóng modal hoạt động
+function closeModal() {
+    const modal = document.getElementById('clubModal');
+    if (modal) modal.style.display = 'none';
+}
+
+// Hàm đóng modal đã có sẵn trong code của bạn
+function closeModal() {
+    document.getElementById('clubModal').style.display = 'none';
+}
 
 // 7. Event Listeners & Điều khiển Modal
 function setupEventListeners() {
@@ -244,16 +387,12 @@ function setupEventListeners() {
 }
 
 function showCreateClubModal() {
-    if(!currentUser) return alert("Hãy đăng nhập trước!");
+    if (!currentUser) return alert("Hãy đăng nhập trước!");
     document.getElementById('createClubModal').classList.add('active');
 }
 
 function closeCreateClubModal() {
     document.getElementById('createClubModal').classList.remove('active');
-    document.getElementById('createClubForm').reset();
+    document.getElementById('createClubForm')?.reset();
 }
 
-function showClubDetail(id) {
-    // Hàm hiển thị chi tiết (bạn có thể viết thêm logic mở modal chi tiết tại đây)
-    console.log("Xem chi tiết CLB ID:", id);
-}
