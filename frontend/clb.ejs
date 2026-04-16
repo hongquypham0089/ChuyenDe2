@@ -6,23 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Câu lạc bộ - CLB Connect | Tạo & Quản lý CLB</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="CSS/clb.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
 </head>
 <body>
 
 <div class="container">
-    <div class="page-header">
+    <div class="page-header" data-aos="fade-down">
         <div>
-            <h1>Câu lạc bộ sinh viên</h1>
-            <p>Khám phá, tham gia hoặc <strong style="color:#c53030">tạo CLB của riêng bạn</strong> để kết nối đam mê</p>
+            <h1><i class="fas fa-users" style="font-size: 32px; margin-right: 12px; background: linear-gradient(135deg, #e11d48, #f43f5e); -webkit-background-clip: text; background-clip: text; color: transparent;"></i>Câu lạc bộ sinh viên</h1>
+            <p>Khám phá, tham gia hoặc <strong style="background: linear-gradient(135deg, #e11d48, #f43f5e); -webkit-background-clip: text; background-clip: text; color: transparent;">tạo CLB của riêng bạn</strong> để kết nối đam mê</p>
         </div>
         <button class="btn-create-club" id="mainCreateClubBtn" onclick="showCreateClubModal()">
             <i class="fas fa-plus-circle"></i> Tạo CLB mới
         </button>
     </div>
 
-    <div class="search-filter-section">
+    <div class="search-filter-section" data-aos="fade-up" data-aos-delay="100">
         <div class="search-box">
             <div class="search-input">
                 <i class="fas fa-search"></i>
@@ -34,9 +35,10 @@
         </div>
     </div>
 
-    <div id="clubsGrid" class="clubs-grid"></div>
+    <div id="clubsGrid" class="clubs-grid" data-aos="fade-up" data-aos-delay="200"></div>
 </div>
 
+<!-- Modal Tạo CLB -->
 <div id="createClubModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -77,14 +79,6 @@
                     <label><i class="fas fa-align-left"></i> Mô tả ngắn (hiển thị trên thẻ) *</label>
                     <textarea id="clubDescription" rows="2" placeholder="Mô tả ngắn gọn, hấp dẫn về CLB..." required></textarea>
                 </div>
-                <div class="form-group">
-                    <label><i class="fas fa-file-alt"></i> Mô tả chi tiết (giới thiệu đầy đủ)</label>
-                    <textarea id="clubFullDescription" rows="4" placeholder="Mục tiêu, hoạt động định kỳ, lợi ích khi tham gia..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label><i class="fas fa-trophy"></i> Thành tựu nổi bật</label>
-                    <input type="text" id="clubAchievements" placeholder="VD: Đạt giải Nhất cuộc thi... | Tổ chức sự kiện 500+ thành viên">
-                </div>
                 <div class="form-actions">
                     <button type="button" class="btn-cancel" onclick="closeCreateClubModal()">Hủy bỏ</button>
                     <button type="submit" class="btn-submit"><i class="fas fa-check-circle"></i> Tạo CLB ngay</button>
@@ -94,6 +88,7 @@
     </div>
 </div>
 
+<!-- Modal Chi Tiết CLB -->
 <div id="clubModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -109,6 +104,14 @@
 </div>
 
 <script src="JS/clb.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({
+      duration: 800,
+      once: true,
+      offset: 50
+  });
+</script>
 </body>
 </html>
 <%- include('partials/Footer') %>
