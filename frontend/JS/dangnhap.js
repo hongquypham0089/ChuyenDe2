@@ -12,11 +12,67 @@ function switchTab(tab) {
         registerTab.classList.remove('active');
         loginForm.classList.remove('form-hidden');
         registerForm.classList.add('form-hidden');
+        // Clear messages when switching
+        clearMessages('loginForm');
+        clearMessages('registerForm');
     } else {
         registerTab.classList.add('active');
         loginTab.classList.remove('active');
         registerForm.classList.remove('form-hidden');
         loginForm.classList.add('form-hidden');
+        clearMessages('loginForm');
+        clearMessages('registerForm');
+    }
+}
+
+// Helper to clear messages
+function clearMessages(formId) {
+    const form = document.getElementById(formId);
+    const messageDiv = form.querySelector('.form-message');
+    if (messageDiv) {
+        messageDiv.remove();
+    }
+}
+
+// Helper to show message
+function showMessage(formId, message, type) {
+    const form = document.getElementById(formId);
+    let messageDiv = form.querySelector('.form-message');
+    
+    if (!messageDiv) {
+        messageDiv = document.createElement('div');
+        messageDiv.className = 'form-message';
+        form.insertBefore(messageDiv, form.firstChild);
+    }
+    
+    messageDiv.textContent = message;
+    messageDiv.className = `form-message ${type}`;
+    messageDiv.style.display = 'block';
+    
+    // Auto hide after 3 seconds
+    setTimeout(() => {
+        if (messageDiv) {
+            messageDiv.style.display = 'none';
+        }
+    }, 3000);
+}
+
+// Helper to set loading state
+function setLoading(button, isLoading, originalText = null) {
+    if (isLoading) {
+        button.classList.add('loading');
+        button.disabled = true;
+        if (!originalText) {
+            button.setAttribute('data-original-text', button.innerHTML);
+        }
+        button.innerHTML = '<i class="fas fa-spinner"></i> Đang xử lý...';
+    } else {
+        button.classList.remove('loading');
+        button.disabled = false;
+        const original = button.getAttribute('data-original-text');
+        if (original) {
+            button.innerHTML = original;
+        }
     }
 }
 
@@ -26,33 +82,32 @@ function switchTab(tab) {
 async function handleLogin() {
     const email = document.getElementById('loginEmail').value.trim();
     const password = document.getElementById('loginPassword').value.trim();
+    const loginBtn = document.querySelector('#loginForm .btn-auth');
 
     if (!email || !password) {
-        alert('Vui lòng nhập email và mật khẩu!');
+        showMessage('loginForm', 'Vui lòng nhập email và mật khẩu!', 'error');
         return;
     }
 
+    setLoading(loginBtn, true);
+
     try {
-        // Gọi API Đăng nhập
         const response = await fetch('/api/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            // Gửi dữ liệu dưới dạng JSON (trùng với tên biến body bên Backend)
-            body: JSON.stringify({ email: email, password: password }) 
+            body: JSON.stringify({ email: email, password: password })
         });
 
-        // Parse kết quả trả về từ Backend
         const data = await response.json();
 
         if (response.ok) {
-            alert(data.message || 'Đăng nhập thành công!');
+            showMessage('loginForm', data.message || 'Đăng nhập thành công!', 'success');
             
-            // LƯU Ý MỚI: Cập nhật lưu thêm Token vào localStorage
             const userInfo = {
                 isLoggedIn: true,
-                token: data.token, // Lưu token để dùng cho các API bảo mật sau này
+                token: data.token,
                 id: data.user_id,
                 code: data.user_code,
                 name: data.name,
@@ -61,21 +116,21 @@ async function handleLogin() {
             };
             localStorage.setItem('currentUser', JSON.stringify(userInfo));
 
-            // Chuyển hướng về trang chủ
-            if (data.role === 'admin') {
-                window.location.href = '/admin';
-            } else {
-                window.location.href = '/'; // Sinh viên bình thường về trang chủ
-            } 
-
-
+            setTimeout(() => {
+                if (data.role === 'admin') {
+                    window.location.href = '/admin';
+                } else {
+                    window.location.href = '/';
+                }
+            }, 1000);
         } else {
-            // Xử lý lỗi (sai pass, không tìm thấy email...)
-            alert(`Lỗi: ${data.message}`);
+            showMessage('loginForm', `Lỗi: ${data.message}`, 'error');
+            setLoading(loginBtn, false);
         }
     } catch (error) {
         console.error("Lỗi đăng nhập:", error);
-        alert('Không thể kết nối đến máy chủ. Vui lòng kiểm tra mạng hoặc server!');
+        showMessage('loginForm', 'Không thể kết nối đến máy chủ. Vui lòng kiểm tra mạng!', 'error');
+        setLoading(loginBtn, false);
     }
 }
 
@@ -90,25 +145,24 @@ async function handleRegister() {
     const password = document.getElementById('regPassword').value.trim();
     const confirm = document.getElementById('regConfirm').value.trim();
     const agree = document.getElementById('agreeTerms').checked;
+    const registerBtn = document.querySelector('#registerForm .btn-auth');
 
-    // Validate dữ liệu cơ bản ở Frontend
     if (!name || !email || !dob || !password || !confirm) {
-        alert('Vui lòng điền đầy đủ thông tin!');
+        showMessage('registerForm', 'Vui lòng điền đầy đủ thông tin!', 'error');
         return;
     }
 
     if (name.length < 2) {
-        alert('Họ và tên quá ngắn!');
+        showMessage('registerForm', 'Họ và tên quá ngắn!', 'error');
         return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-        alert('Email không đúng định dạng!');
+        showMessage('registerForm', 'Email không đúng định dạng!', 'error');
         return;
     }
 
-    // Kiểm tra tuổi (16 - 100)
     const birthDate = new Date(dob);
     const today = new Date();
     let age = today.getFullYear() - birthDate.getFullYear();
@@ -118,34 +172,33 @@ async function handleRegister() {
     }
 
     if (age < 16 || age > 100) {
-        alert(`Tuổi không hợp lệ (${age} tuổi). Bạn phải từ 16 đến 100 tuổi!`);
+        showMessage('registerForm', `Tuổi không hợp lệ (${age} tuổi). Bạn phải từ 16 đến 100 tuổi!`, 'error');
         return;
     }
 
     if (password !== confirm) {
-        alert('Mật khẩu xác nhận không khớp!');
+        showMessage('registerForm', 'Mật khẩu xác nhận không khớp!', 'error');
         return;
     }
 
     if (password.length < 6) {
-        alert('Mật khẩu phải có ít nhất 6 ký tự!');
+        showMessage('registerForm', 'Mật khẩu phải có ít nhất 6 ký tự!', 'error');
         return;
     }
 
     if (!agree) {
-        alert('Bạn cần đồng ý với điều khoản dịch vụ!');
+        showMessage('registerForm', 'Bạn cần đồng ý với điều khoản dịch vụ!', 'error');
         return;
     }
 
+    setLoading(registerBtn, true);
+
     try {
-        // Gọi API Đăng ký
         const response = await fetch('/api/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            // Gửi lên name, email, password như backend đang mong đợi
-            // (Hiện API backend của bạn không lưu 'username', nên mình không gửi lên để tránh dư thừa data)
             body: JSON.stringify({ 
                 name: name, 
                 email: email, 
@@ -158,24 +211,60 @@ async function handleRegister() {
         const data = await response.json();
 
         if (response.ok) {
-            alert('Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.');
+            showMessage('registerForm', 'Đăng ký thành công! Chuyển sang đăng nhập...', 'success');
             
-            // Tự động chuyển qua tab Login và điền sẵn email vừa đăng ký
-            switchTab('login');
-            document.getElementById('loginEmail').value = email;
-            document.getElementById('loginPassword').value = ''; 
+            setTimeout(() => {
+                switchTab('login');
+                document.getElementById('loginEmail').value = email;
+                document.getElementById('loginPassword').value = '';
+                setLoading(registerBtn, false);
+                
+                document.getElementById('regName').value = '';
+                document.getElementById('regEmail').value = '';
+                document.getElementById('regDob').value = '';
+                document.getElementById('regPassword').value = '';
+                document.getElementById('regConfirm').value = '';
+                document.getElementById('agreeTerms').checked = false;
+            }, 1500);
         } else {
-            // Lỗi email đã tồn tại, thiếu thông tin...
-            alert(`Lỗi: ${data.message}`);
+            showMessage('registerForm', `Lỗi: ${data.message}`, 'error');
+            setLoading(registerBtn, false);
         }
     } catch (error) {
         console.error("Lỗi đăng ký:", error);
-        alert('Không thể kết nối đến máy chủ. Vui lòng kiểm tra mạng hoặc server!');
+        showMessage('registerForm', 'Không thể kết nối đến máy chủ. Vui lòng kiểm tra mạng!', 'error');
+        setLoading(registerBtn, false);
     }
 }
 
-// Mặc định chạy khi load trang
+// Enter key support
+document.addEventListener('DOMContentLoaded', function() {
+    const loginPassword = document.getElementById('loginPassword');
+    const regConfirm = document.getElementById('regConfirm');
+    
+    if (loginPassword) {
+        loginPassword.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') handleLogin();
+        });
+    }
+    
+    if (regConfirm) {
+        regConfirm.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') handleRegister();
+        });
+    }
+});
+
+// Check if already logged in
 window.onload = function() {
-    // Nếu user đã đăng nhập, có thể bạn muốn đá họ về trang chủ luôn?
-    // if(localStorage.getItem('currentUser')) window.location.href = '/';
+    const currentUser = localStorage.getItem('currentUser');
+    if (currentUser) {
+        try {
+            const user = JSON.parse(currentUser);
+            if (user.isLoggedIn) {
+                // Optional: redirect to home
+                // window.location.href = '/';
+            }
+        } catch(e) {}
+    }
 };
